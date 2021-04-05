@@ -1,0 +1,58 @@
+﻿@model List<Web.Model.CustomModel.ProductModel>
+@{
+    int page = (int)TempData["Page"];
+    int tt = 0;
+    if (page == 1)
+    {
+        tt = 0;
+    }
+    else
+    {
+        tt = (page - 1) * 10;
+    }
+}
+<div class="col-xs-12">
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th style="text-align:center;">TT</th>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Danh mục</th>
+                <th>Giá NY</th>
+                <th>Giá KM</th>
+                <th>Ngày tạo</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                tt++;
+                string sale = string.Empty;
+                if (item.Sale != 0)
+                {
+                    sale = String.Format("{0:0,0}", item.Sale);
+                }
+                <tr>
+                    <td style="text-align:center;">@tt</td>
+                    <td>@item.Name</td>
+                    <td><img style="width:70px" src="@item.Images" /></td>
+                    <td>@item.CategoryName</td>
+                    <td>@String.Format("{0:0,0}", item.Price)</td>
+                    <td>@sale</td>
+                    <td>@string.Format("{0:dd/MM/yyyy HH:mm}", item.CreatedDate)</td>
+                    <td style="width:120px">
+                        @*<a onclick="Product.handleAddImg(@item.ID)" class="btn btn-primary btn-bordered" title="Thêm ảnh">
+                            <i class="fa fa-file-image-o"></i>
+                        </a>*@
+                        <a href="/Admin/Product/Edit/@item.ID" class="btn btn-primary btn-bordered"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a style="margin-top:3px" href="#" class="btn btn-danger btn-bordered" onclick="Product.ondelete(@item.ID)">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

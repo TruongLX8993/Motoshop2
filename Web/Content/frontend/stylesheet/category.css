@@ -1,0 +1,192 @@
+@font-face {
+    font-family: 'marlboro';
+    src: url('../fonts/UTMDaxline.woff');
+}
+.categories-side {
+    background: #fff;
+    margin-bottom: 25px;
+}
+.sidebar-title {
+    font-family: 'marlboro';
+    font-size: 18px;
+    font-weight: normal;
+    padding: 13px 18px 13px 18px;
+    background-color: #f4d90c;
+    color: #FFF;
+    text-transform: uppercase;
+    line-height: 24px;
+}
+
+#column-right .aff .sidebar-title{
+    padding-left: 18px;
+}
+
+#menu_categfory, .menu-sidebar {
+    border-color: #d9d9d9;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    background-color: #f8f8f8;
+    padding: 10px 0;
+}
+#menu_categfory li, .menu-sidebar li{
+    position: relative;
+    line-height: 38px;
+}
+#menu_categfory li:hover > .icons:before, #menu_categfory li:hover > a{
+    color: #3dbf91;
+}
+
+#menu_categfory li a, .menu-sidebar li a{
+    padding-left: 18px;
+    padding-right: 40px;
+    display: block;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+#column-right #menu_categfory li a, .menu-sidebar li a{
+    padding-right: 18px;
+}
+
+#column-right .aff li a, .menu-sidebar.aff li a{
+    padding-left: 18px;
+}
+
+#menu_categfory li a.active, .menu-sidebar li a.active{
+    color: #3dbf91;
+}
+
+li.selected a {
+    position: relative
+}
+.icons {
+    cursor: pointer;
+    background-position: 14px -9px;
+    height: 36px;
+    margin-left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 56px;
+}
+#column-right .icons {
+    right: auto;
+    left: 0;
+    width: 20px;
+}
+
+.icons:before {
+    content: "\f105";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color: #000;
+    font-size: 18px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    padding-left: 22px;
+}
+#column-right .icons:before {
+    content: "\f104";
+    padding-left: 6px;
+}
+
+@media(min-width:768px) and (max-width: 991px){
+    #menu_categfory li a, .menu-sidebar li a{
+        padding-left: 15px;
+        padding-right: 30px;
+        line-height: 24px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    .icons {
+        width: 40px;
+    }
+}
+@media(max-width:767px){
+    #menu_categfory li a, .menu-sidebar li a{
+        line-height: 24px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+}
+#menu_categfory .treeview li:hover> a {
+    color: #3dbf91;
+}
+#menu_categfory li.selected >.icons {
+    background-position: 14px -43px;
+}
+#menu_categfory li ul{
+    padding: 12px 0 16px 0 ;
+    padding-left: 0;
+    position: absolute;
+    left: 80%;
+    top: 0;
+    background: #f8f8f8;
+    border: 1px solid #d9d9d9;
+    min-width: 200px;
+    z-index: 1111;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transition: all ease .4s;
+    -webkit-transition: all ease .4s;
+    -moz-transition: all ease .4s;
+    -ms-transition: all ease .4s;
+    -o-transition: all ease .4s;
+}
+#column-right #menu_categfory  li ul{
+    left: auto;
+    right: 80%;
+}
+#menu_categfory > li:hover ul.label2 {
+    visibility: visible;
+    opacity: 1;
+    left: 100%;
+}
+#column-right #menu_categfory > li:hover ul.label2 {
+    left: auto;
+    right: 100%;
+}
+#menu_categfory li ul li{
+    line-height: normal;
+}
+#menu_categfory li ul li .icons{
+    content: "\f105"
+    cursor: pointer;
+    height: 28px;
+    margin-left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    line-height: 28px;
+}
+
+#menu_categfory li ul li a{
+    padding: 5px 18px;
+    font-size: 13px;
+    line-height: 18px;
+    text-transform: none;
+    display: block;
+}
+#menu_categfory  li ul li:hover ul.label3 {
+    visibility: visible;
+    opacity: 1;
+    left: 100%;
+}
+#menu_categfory  li ul li ul li:hover ul.label4 {
+    visibility: visible;
+    opacity: 1;
+    left: 100%;
+}
+#column-right #menu_categfory  li ul li:hover ul.label3 {
+    right: 100%;
+    left: auto;
+}
+#column-right #menu_categfory  li ul li ul li:hover ul.label4 {
+    right: 100%;
+    left: auto;
+}
+

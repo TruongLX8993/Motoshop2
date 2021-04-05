@@ -1,0 +1,24 @@
+﻿
+@model Web.Model.About
+@{
+    ViewBag.Title = "Giới thiệu";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<ul class="path-url">
+    <li><a href="index.html">Trang chủ&nbsp; <i class="fa fa-angle-double-right"></i></a></li>
+    <li><strong class="text-color-2">Giới thiệu</strong></li>
+</ul>
+@if (Model != null)
+{
+    <div class="more-info">
+        <div class="title">
+            <h1><span> Giới Thiệu</span> </h1>
+        </div>
+        <div class="description">
+            <p><strong>@Model.MetaTitle</strong></p>
+            @Html.Raw(Model.Contents)
+        </div>
+    </div>
+}
+
+<div class="clearfix"></div>

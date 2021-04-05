@@ -1,0 +1,96 @@
+﻿@{
+    var lstAction = (List<int>)HttpContext.Current.Session["Action"];
+    int page = (int)TempData["Page"];
+    int tt = 0;
+    if (page == 1)
+    {
+        tt = 0;
+    }
+    else
+    {
+        tt = (page - 1) * 10;
+    }
+}
+@helper RenderMenu(Web.Model.HomeMenu parent, List<Web.Model.HomeMenu> listfull)
+{
+     var lstChilds = listfull.Where(g => g.ParentId == parent.ID);
+    <tr>
+        <td style="vertical-align: middle;">@(new String('-', ((int)parent.Level - 1) * 2))@parent.Name</td>
+        <td style="vertical-align: middle;">@parent.Icon</td>
+        <td style="vertical-align: middle;">
+            @Html.HiddenFor(g => parent.ID)
+            @Html.TextBoxFor(g => parent.Ordering, new { @class = "form-control width50 text-center" })
+        </td>
+        <td>@string.Format("{0:dd/MM/yyyy HH:mm}", parent.CreatedDate)</td>
+        <td>
+            <div class="btn-list pull-right mr5">
+                <a href="#" class="btn btn-primary btn-bordered" onclick="homemenu.loadfrmedit(@parent.ID) " title="Sửa"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="#" class="btn btn-danger btn-bordered" onclick="homemenu.ondelete(@parent.ID) " title="Xóa">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </a>
+            </div>
+        </td>
+    </tr>
+    foreach (var child in lstChilds)
+    {
+        @RenderMenu(child, listfull);
+    }
+}
+@using Web.Model.CustomModel
+@model List<Web.Model.HomeMenu>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Tên menu</th>
+            <th>Icon</th>
+            <th>Thứ tự hiển thị</th>
+            <th>Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            tt++;
+            <tr>
+                <td>@tt</td>
+                <td style="vertical-align: middle;">@item.Name</td>
+                <td style="vertical-align: middle;">@item.Icon</td>
+                <td style="vertical-align: middle;">
+                    @Html.HiddenFor(g => item.ID)
+                    @Html.TextBoxFor(g => item.Ordering, new { @class = "form-control width50 text-center" })
+                </td>
+                <td>@string.Format("{0:dd/MM/yyyy HH:mm}", item.CreatedDate)</td>
+                <td>
+                    <div class="btn-list pull-right mr5">
+                        @if (lstAction != null && lstAction.Contains((int)EnumHelper.Action.Edit))
+                        {
+                            <a href="#" class="btn btn-primary btn-bordered" onclick="homemenu.loadfrmedit(@item.ID) " title="Sửa"><i class="glyphicon glyphicon-pencil"></i></a>
+                        }
+                        @if (lstAction != null && lstAction.Contains((int)EnumHelper.Action.Delete))
+                        {
+                            <a href="#" class="btn btn-danger btn-bordered" onclick="homemenu.ondelete(@item.ID) " title="Xóa">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        InitClickCheckAllInTable("chkall", function (res) {
+            $("#hdfID").val(res);
+        });
+        $('.cabn_datatable').dataTable(
+          {
+              "oLanguage": {
+                  "sUrl": "/Content/Vietnamese.json"
+              },
+          }
+      );
+    });
+</script>

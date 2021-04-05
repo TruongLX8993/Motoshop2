@@ -1,0 +1,51 @@
+﻿<script src="~/AppJs/instruction.js"></script>
+@{
+    ViewBag.Title = "Hướng dẫn mua hàng và chính sách bảo hành";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Ajax.BeginForm("ListData", "Instruction", null, new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnSuccess = "instruction.onSearchSuccess",
+}, new { @id = "frmSearch" }))
+{
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Hướng dẫn</h3>
+                <div class="row" style="margin-bottom:10px">
+                    <div class="col-md-4">
+                        <input type="text" id="txtSearch" class="form-control" placeholder="Nhập tiêu đề" />
+                        <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <button id="btnSearch" onclick="instruction.loadData()" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                    <div class="col-md-4">
+                        <a style="float:right" href="/admin/instruction/add" class="btn btn-primary">Thêm mới</a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive" id="gridData">
+
+                        </div>
+                        <div class="pull-right" id="paginationholder">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        instruction.loadData(1);
+    })
+</script>

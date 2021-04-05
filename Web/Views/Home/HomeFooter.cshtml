@@ -1,0 +1,59 @@
+﻿@*@using Web.Areas.Admin.Controllers
+@{
+    Layout = null;
+}
+<style>
+    .to-top {
+        z-index: 999;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+    }
+</style>
+<a href="#top" class="btn btn-default to-top" style="display:none;"><i class="fa fa-arrow-up"></i></a>
+<footer id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="body-footer">
+                <div class="footer" style="background: #055296">
+                    <div class="col-md-8 col-xs-12 col-sm-12">
+                        <img src="~/Images/Post/files/logo_footer.png" class="hidden-sm hidden-xs" />
+                        <div class="text-footer col-md-10 col-sm-12 col-xs-12">
+                            @Html.Raw(ViewBag.FooterInfo)
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 trafic visible-lg visible-md">
+                        <ul class="list-unstyled pull-right">
+                            <li><a href="/pages/so-do-cong.html"><i class="fa fa-map-o"></i>Sơ đồ website</a></li>
+                            <li><i class="fa fa-clock-o"></i> Đang truy cập: @ApplicationInstance.Application["Totaluser"]</li>
+                            <li><i class="fa fa-bar-chart-o"></i> Tổng truy cập: @ViewBag.access</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<style>
+    .navbar-default{background: @ConfigTextController.GetValueCFT("mau_menu") !important}
+    #dosinot .nav-pills > li > a, .boxhomevz .title_panel a, .navbar-collapse ul li a:hover, .navbar-collapse ul li li a:hover, .navbar-collapse ul li a.active {background: @ConfigTextController.GetValueCFT("mau_tab_active") !important;}
+    .boxhomevz .title_panel, #dosinot .nav-pills > li, .homevbz ul {border-bottom: 4px solid @ConfigTextController.GetValueCFT("mau_tab_active") !important;}
+    .homevbz li.active {background: @ConfigTextController.GetValueCFT("mau_tab_active") !important;}
+    .homevbz li{background: @ConfigTextController.GetValueCFT("mau_tab_inactive") !important;}
+    .footer {border-top: 10px solid @ConfigTextController.GetValueCFT("mau_borderfooter") !important;}
+    .navbar-nav > li.dropdown:hover {background: @ConfigTextController.GetValueCFT("mau_menu_hover") !important;}
+</style>*@
+
+ 
+ 
+@using Web.Model
+@using Web
+@using Web.Areas.Admin.Controllers
+
+@{
+    Layout = null;
+}
+ 
+
+
+   

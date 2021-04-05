@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCart.cshtml";
+}
+
+<div class="breadcrumb-svn">
+    <ul>
+        <li><a href="">Trang chủ</a></li>
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <li class="active"><a href="">Giới thiệu</a></li>
+    </ul>
+</div>
+<main role="main">
+    <div class="col-md-12 col-xs-12 col-sm-12">
+        <label for="">Giỏ hàng</label>
+        <table class="table table-hover table-bordered table-striped table-responsive gio-hang-svn">
+            <thead class="gio-hang-table">
+                <tr>
+                    <th>STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Đơn gía</th>
+                    <th>Thành tiền</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><img class="img-responsive img-product" src="img/Khuyen-mai-qua-tang-20-10-cho-ban-gai.jpg" alt="h.anh"></td>
+                    <td><a href="">SOn dưỡng ra cao cấp </a></td>
+                    <td><input type="number" oninput="changeQuantity(this.value)" id="quantity" value="1" min="1" class="sizeinput"></td>
+                    <td id="priceMoney">250</td>
+                    <td id="totalPriceMoney"></td>
+                    <td><a href="" title="Xóa"><i class="fa fa-times" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="4"><b>Tổng tiền</b></td>
+                    <td><b id="totalMoney"></b></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <!--  Phan hiện thị cho mobile -->
+        <div class="gio-hang-mobile">
+            <tr>
+                <td>STT: </td>
+                <td>1</td>
+            </tr>
+            <br>
+            <tr>
+                <td>Ảnh : </td>
+                <td><img class="img-responsive img-product" src="img/Khuyen-mai-qua-tang-20-10-cho-ban-gai.jpg" alt="h.anh"></td>
+            </tr>
+            <br>
+            <tr>
+                <td>Tên sản phẩm :</td>
+                <td>SOn dưỡng ra cao cấp</td>
+            </tr>
+            <br>
+            <tr>
+                <td>Số lượng :</td>
+                <td>2</td>
+            </tr>
+            <br>
+            <tr>
+                <td>Đơn gía : </td>
+                <td>250.000</td>
+            </tr>
+            <br>
+            <tr>
+                <td>Thành tiền :</td>
+                <td>500.000</td>
+            </tr>
+            <br>
+            <label for=""><b>Tổng tiền :</b> <b>500.000 VNĐ</b></label>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <label for=""><h3>Thông tin đặt hàng</h3></label>
+        <form action="" method="POST" role="form">
+            <legend>Nhập thông tin để tiến hành đặt hàng</legend>
+            <div class="col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label for="">Họ và tên</label>
+                    <input type="text" name="fullname" class="form-control" id="" placeholder="Họ và tên">
+                </div>
+                <div class="form-group">
+                    <label for="">Địa chỉ</label>
+                    <input type="text" name="address" class="form-control" id="" placeholder="Địa chỉ :Số nhà, Thôn , Xã , Phường , Thị trấn , Tỉnh/TP">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Số điện thoại</label>
+                    <input type="text" name="phone" class="form-control" id="" placeholder="Số diện thoại">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Email ( nếu có )</label>
+                    <input type="text" name="gmail" class="form-control" id="" placeholder="Gmail">
+                </div>
+                <button type="submit" class="btn btn-success">Đặt hàng</button>
+            </div>  <!--  /col-md-6   -->
+            <div class="col-md-6 col-xs-12">
+                <span> <input type="checkbox" checked="checked" name="" value="1"> Thanh toán khi nhận hàng </span>
+            </div>
+        </form>
+    </div>
+</main>
+<script>
+    function changeQuantity(quantity) {
+        if (quantity < 0) {
+            alert("Số lượng phải hơn hơn 0");
+            $('#quantity').val(1);
+        } else {
+            let priceMoney = $('#priceMoney').text();
+            let totalMoney = parseInt(priceMoney) * parseInt(quantity);
+            $('#totalMoney').text(totalMoney);
+            $('#totalPriceMoney').text(totalMoney);
+        }
+    }
+    $(document).ready(function () {
+
+    })
+</script>

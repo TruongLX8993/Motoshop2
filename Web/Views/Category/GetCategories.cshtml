@@ -1,0 +1,60 @@
+﻿@model IList<Web.Model.Category>
+@{ 
+    string dothtml = ".html";
+}
+<p style="text-align:center;font-weight:bold;font-size:20px;font-family:inherit">Danh mục sản phẩm</p>
+<hr style="margin-top:10px;margin-bottom:10px;border-top:1px solid #999999"/>
+@if (Model != null && Model.Count > 0)
+{
+    var lstParent = Model.Where(g => g.ParentId == 0).OrderBy(g => g.OrderDisplay).ToList();
+    <ul class="sub-1">
+        @foreach (var item in lstParent)
+        {
+            var level1 = Model.Where(g => g.ParentId == item.ID).ToList();
+            if (level1.Count > 0)
+            {
+                <li class="menu-item-66">
+                    <a href="/@item.LinkSeo@dothtml">@item.Name</a> <i style="margin-right:20px;float:right" class="fa fa-angle-right"></i>
+                    <ul class="sub-menu">
+                        @foreach (var item1 in level1)
+                        {
+                            var level2 = Model.Where(g => g.ParentId == item1.ID).ToList();
+                            if (level2.Count > 0)
+                            {
+                                <li><a href="#">content</a>
+                                    <a href="/@item1.LinkSeo@dothtml">@item1.Name</a> <i style="margin-right:20px;float:right" class="fa fa-angle-right"></i>
+                                    <ul class="sub-menu">
+                                        @foreach (var item2 in level2)
+                                        {
+                                            var level3 = Model.Where(g => g.ParentId == item2.ID).ToList();
+                                            if (level3.Count > 0)
+                                            {
+                                                foreach (var item3 in level3)
+                                                {
+                                                    <li  class="menu-item-66"><a href="/@item3.LinkSeo@dothtml">@item3.Name</a></li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li  class="menu-item-66"><a href="/@item2.LinkSeo@dothtml">@item2.Name</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li  class="menu-item-66"><a href="/@item1.LinkSeo@dothtml">@item1.Name</a></li>
+                            }
+                        }
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li class="menu-item-66"><a href="/@item.LinkSeo@dothtml">@item.Name</a> </li>
+            }
+        }
+    </ul>
+}
+

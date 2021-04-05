@@ -1,0 +1,41 @@
+﻿@model List<Web.Model.InfoUseful>
+ 
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <p>
+        @*<img src="~/Content/frontend/images/Watermark-mau.png" alt="" />*@
+        </p>
+        <ul class="list-address">
+            <li>
+                <p><em class="fa fa-2x fa-map-marker">&nbsp;</em>29/33 Đo&agrave;n Thị Điểm - P.1 - Q. Ph&uacute; Nhuận - HCM</p>
+            </li>
+            <li><em class="fa fa-2x fa-phone">&nbsp;</em>HOT LINE: <strong>0979 036 030</strong> -&nbsp;028 6652 8287</li>
+            <li>
+                <p><em class="fa fa-2x fa-envelope">&nbsp;</em>tinomotor.vietnam@gmail.com</p>
+            </li>
+            <li>
+                <p><em class="fa fa-2x fa-globe">&nbsp;</em>tinomotor.vn</p>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-5">
+        <h3>FACEBOOK TUNRACKING</h3>
+        <p>&nbsp;</p>
+        <div class="box-fb"><iframe style="border: none; overflow: hidden; width: 400px; height: 290px;" src="http://www.facebook.com/plugins/likebox.php?href=https://www.facebook.com/Tinomotor-430015677154865&amp;width=400&amp;height=290&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true" width="300" height="150" frameborder="0" scrolling="no"></iframe></div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+        <h3>GIỜ MỞ CỬA</h3>
+        <p>T2-T7: S&aacute;ng 8h30 -12h, Chiều 1h - 7h</p>
+        <p>Chủ Nhật: S&aacute;ng 8h30 - 2h</p>
+        <h3>H&igrave;nh Thức Thanh To&aacute;n :</h3>
+        <p>Techcombank HCM <br /> Chủ TK : Nguyễn Kim Hải <br /> Số TK : 1903 270 400 2017</p>
+    </div>
+</div>
+<input type="hidden" id="footerContent" value="@ViewBag.Footer" />
+<script>
+    let footerContent = $('#footerContent').val();
+    var lstdata = JSON.parse(footerContent);
+    for (var i = 0; i < lstdata.length; i++) {
+        $("#" + lstdata[i].Key).html(lstdata[i].Value);
+    }
+</script>

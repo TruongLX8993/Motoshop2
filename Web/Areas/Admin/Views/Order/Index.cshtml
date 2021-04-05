@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var lstAction = (List<int>)HttpContext.Current.Session["Action"];
+}
+@model List<Web.Model.Category >
+<script src="~/AppJs/order.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Quản lý đơn hàng</h3>
+            </div>
+            <div class="row" style="margin-left:5px;margin-top: 10px;">
+                <div class="col-md-2">
+                    <select onchange="Order.loadData()" id="status" class="form-control">
+                        <option value="0">-- Trạng thái --</option>
+                        <option value="1">Chưa giao hàng</option>
+                        <option value="2">Đã giao hàng</option>
+                        <option value="3">Hủy giao hàng</option>
+                        <option value="4">Trả lại hàng</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="text" id="customerName" class="form-control keyEnter" placeholder="Tên khách hàng" />
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="input-group">
+                        <input type="text" name="tuNgay" id="tuNgay" class="form-control datepicker-mask keyEnter" placeholder="Đến Ngày" data-mask="99/99/9999" />
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="input-group">
+                        <input type="text" name="denNgay" id="denNgay" class="form-control datepicker-mask keyEnter" placeholder="Đến Ngày" data-mask="99/99/9999" />
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button id="btnSearch" onclick="Order.loadData()" class="btn btn-primary">Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive" id="gridData">
+
+                        </div>
+                        <div class="col-md-12" id="paginationholder">
+                            <ul id="pagination" class="pagination"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.datepicker-mask').datepicker({
+            locale: 'vi',
+            format: "yy/mm/dd 23:59:59",
+            sideBySide: true
+        });
+    })
+</script>

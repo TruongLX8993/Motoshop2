@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/_LayoutCart.cshtml";
+    int t = 0;
+}
+@model List<Web.Model.CustomModel.CartItem>
+<style>
+    .error_text{
+        color: red;
+    }
+    .asterisk {
+        color: red;
+        font-weight:normal
+    }
+</style>
+<ul class="path-url">
+    <li><a href="index.html">Trang chủ &nbsp; <i class="fa fa-angle-double-right"></i></a></li>
+    <li><strong class="text-color-2">Giỏ hàng</strong></li>
+</ul>
+<div class="title">
+    <h2><span>Giỏ hàng</span> </h2>
+</div>
+<input type="hidden" id="lst-cart" value="@ViewBag.ListCart" />
+<div class="item-view-products square">
+    <div class="col-md-12 col-xs-12 col-sm-12" id="titleCart">
+        <label for=""><h3>Giỏ hàng</h3></label>
+        <table class="table table-hover table-bordered table-striped table-responsive gio-hang-svn">
+            <thead class="gio-hang-table">
+                <tr>
+                    <th style="text-align:center;">STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Đơn gía</th>
+                    <th>Thành tiền</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="loadData">
+               
+            </tbody>
+        </table>
+
+        <!--  Phan hiện thị cho mobile -->
+        <div id="ordermobile" class="gio-hang-mobile">
+            
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12" style="padding-left: 45%">
+        <a href="javascript:void(0)" onclick="saveOrder()" class="btn btn-success">Lưu đơn hàng</a>
+        <a href="javascript:void(0)" id="btn-cancel-order" onclick="cart.cancelOrder()" class="btn btn-success">Hủy đơn hàng</a>
+    </div>
+    <div id="orderinfo" class="col-md-12 col-xs-12">
+        <label for=""><h3>Thông tin đặt hàng</h3></label>
+        <form action="" method="POST" role="form">
+            <legend>Nhập thông tin để tiến hành đặt hàng</legend>
+            <div style="padding-left: 0px" class="col-md-6 col-xs-12">
+                <div class="form-group">
+                    <label for="">Họ và tên <span class="asterisk">(*)</span></label>
+                    <input type="text" name="fullname" class="form-control" id="fullname" oninput="checkFullName(this.value)">
+                    <span class="error_text" id="errorFullName"></span>
+                </div>
+                <div class="form-group">
+                    <label for="">Địa chỉ <span class="asterisk">(*)</span></label>
+                    <input type="text" name="address" class="form-control" id="address" oninput="checkAddress(this.value)">
+                    <span class="error_text" id="errorAddress"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Số điện thoại <span class="asterisk">(*)</span></label>
+                    <input type="text" name="phone" class="form-control" id="phone" oninput="checkPhone(this.value)">
+                    <span class="error_text" id="errorPhone"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Email ( nếu có )</label>
+                    <input type="text" name="gmail" class="form-control" id="gmail">
+                    <span class="erro_text"></span>
+                </div>
+                <button type="button"  style="margin-left: 40%" id="btn-order" class="btn btn-success">Đặt hàng</button>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <span> <input type="checkbox" checked="checked" name="" value="1"> Thanh toán khi nhận hàng </span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="clearfix"></div>
+<script src="~/AppJs/cart.js"></script>
+<script>
+    let row = 0;
+    let description = '';
+    let txtCart = $('#lst-cart').val();
+    if(txtCart !=''){
+        localStorage.setItem('CartSession', txtCart);
+    }
+    let lstCart = localStorage.getItem('CartSession');
+    lstCart = JSON.parse(lstCart);
+    if (lstCart != null) {
+        lstCart.forEach(function (item) {
+            row++;
+            let price = 0;
+            let total = 0;
+            if(item.Product.Price == null && item.Product.Sale == null){
+                price = 0;
+                total = 0;
+            }
+               
+            if(item.Product.Price != null && item.Product.Sale == null){
+                price = addCommas(item.Product.Price);
+                total = addCommas(item.Product.Price * item.Quantity);
+            }
+               
+            if (item.Product.Price == null && item.Product.Sale != null){
+                price = addCommas(item.Product.Sale);
+                total = addCommas(item.Product.Sale * item.Quantity);
+            }
+               
+            if (item.Product.Price != null && item.Product.Sale != null){
+                price = addCommas(item.Product.Price);
+                total = addCommas(item.Product.Price * item.Quantity);
+            }
+
+            description += "<tr id='row_" + row + "'>";
+            description += "<input type='hidden' id='productid_" + row + "' value='" + item.Product.ID + "' />";
+            description += "<td style='text-align:center;'>" + row + "</td>";
+            description += "<td>";
+            description += "<img class='img-responsive img-product' style='width:60px' src='" + item.Product.Images + "' alt=''>";
+            description += "</td>";
+            description += "<td><a href='#'>" + item.Product.Name + "</a></td>";
+            description += "<td style='width:30px'>";
+            description += "<input type='number' oninput='cart.changeQuantity(this.value," + item.Product.ID + ")' id='quantity_" + item.Product.ID + "' value='" + item.Quantity + "' min='1' class='sizeinput quantityProduct_" + row + "'>";
+            description += "</td>";
+            description += "<td>";
+            description += "<input type='hidden' id='hdPriceMoney_" + item.Product.ID + "' value='" + price + "' />";
+            description += "<span id='priceMoney_" + item.Product.ID + "'>" + price + "</span>";
+            description += "</td>";
+            description += "<td>";
+            description += "<input class='total_price_money' id='hdTotalPriceMoney_" + item.Product.ID + "' type='hidden' value='" + total + "' />";
+            description += "<span id='totalPriceMoney_" + item.Product.ID + "'>" + total + "</span>";
+            description += "</td>";
+            description += "<td style='text-align:center;'>";
+            description += "<a href='javascript:void(0)' onclick='deleteProduct(" + row + ")' title='Xóa'><i class='fa fa-times' aria-hidden='true'></i></a>";
+            description += "</td>";
+            description += "</tr>";
+        });
+        description += `<tr>
+                    <td style="text-align:center" colspan="5"><b>Tổng tiền</b></td>
+                    <td colspan="5"><b><span id="totalMoney"></span> VNĐ</b></td>
+                </tr>`;
+        $('#loadData').html(description);
+        $('#coutCart').text(lstCart.length);
+        if (/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            let row_mobile = 0;
+            let tbl_mobile = '';
+            lstCart.forEach(function (item) {
+                let price_mb = 0;
+                let total_mb =  0;
+                if (item.Product.Price == null && item.Product.Sale == null){
+                    price_mb = 0;
+                }
+                   
+                if (item.Product.Price != null && item.Product.Sale == null){
+                    price_mb = addCommas(item.Product.Price);
+                    total_mb = addCommas(item.Product.Price * item.Quantity);
+                }
+                    
+                if (item.Product.Price == null && item.Product.Sale != null){
+                    price_mb = addCommas(item.Product.Sale);
+                    total_mb = addCommas(item.Product.Sale * item.Quantity);
+                }
+                   
+                if (item.Product.Price != null && item.Product.Sale != null){
+                    price_mb = addCommas(item.Product.Price);
+                    total_mb = addCommas(item.Product.Price * item.Quantity);
+                }
+                    
+                row_mobile++;
+                tbl_mobile += "<input type='hidden' id='productidMobile_" + row_mobile + "' value='" + item.Product.ID + "' />";
+                tbl_mobile += "<tr><td>STT: </td><td>" + row_mobile + "</td></tr><br>";
+                tbl_mobile += "<tr><td>Ảnh</td><td><img class='img-responsive img-product' src='" + item.Product.Images + "'></td></tr><br>";
+                tbl_mobile += "<tr><td>Tên sản phẩm :</td><td>" + item.Product.Name + "</td></tr><br>";
+                tbl_mobile += "<tr><td>Số lượng :</td><td><input type='number' onblur='cart.blurQuantity(this.value," + item.Product.ID + ")' oninput='cart.changeQuantityMobile(this.value," + item.Product.ID + ")' id='quantityMobile_" + item.Product.ID + "' value='" + item.Quantity + "' min='1' class='sizeinput quantityProduct_" + row_mobile + "'></td></tr>";
+                tbl_mobile += "<br><tr><td>Đơn giá :</td><td><input type='hidden' id='hdPriceMoneyMobile_" + item.Product.ID + "' value='" + price_mb + "' />";
+                tbl_mobile += "<span id='priceMoneyMobile_" + item.Product.ID + "'>" + price_mb + "</span></td></tr><br>";
+                tbl_mobile += "<tr><td>Thành tiền :</td><td><input class='thanhtienmobile' type='hidden' id='hdTotalPriceMoneyMobile_" + item.Product.ID + "' value='" + total_mb + "' />";
+                tbl_mobile += "<span id='totalPriceMoneyMobile_" + item.Product.ID + "'>" + total_mb + "</span></td></tr><br>";
+
+            });
+            tbl_mobile + "<label for=''><b>Tổng tiền : <span id='totalMoneyMobile'></span></b><b> VNĐ</b></label>";
+            $('#ordermobile').html(tbl_mobile);
+        }
+        localStorage.setItem('CountCart', lstCart.length);
+    } else {
+        $('#ordermobile').html('<label for=""><b>Chưa có sản phẩm nào được đặt mua</b></label>');
+        $('.cart-title').css('display', 'none');
+        $('#titleCart').html('<label for=""><h3>Bạn chưa đặt mua sản phẩm nào</h3></label>');
+        $('#orderinfo').css('display', 'none');
+        $('#btn-cancel-order').css('display', 'none');
+    }
+
+    var number = row;
+    function deleteProduct(i){
+        number--;
+        let total = 0;
+        $('#row_' + i).remove();
+        $(".total_price_money").each(function () {
+            let money = $(this).val().replace(',', '');
+            total  += parseInt(money);
+        });
+        let numCommas = addCommas(total);
+        $('#totalMoney').text(numCommas);
+        if (number == 0) {
+            localStorage.clear();
+        }
+        $('#coutCart').text(number);
+        if (number == '0') {
+            $('.cart-title').css('display','none');
+        }
+    }
+    function checkFullName(fullname){
+        if(fullname.trim()!==''){
+            $('#errorFullName').text("");
+        }else{
+            $('#errorFullName').text("Vui lòng nhập họ tên");
+        }
+    }
+    function checkAddress(address){
+        if(address.trim()===''){
+            $('#errorAddress').text("Vui lòng nhập địa chỉ");
+        }else{
+            $('#errorAddress').text("");
+        }
+    }
+    function checkPhone(phone){
+        if(phone.trim()===''){
+            $('#errorPhone').text("Vui lòng nhập số điện thoại");
+        }else{
+            $('#errorPhone').text("");
+        }
+    }
+    function addCommas(nStr) {
+        nStr += '';
+        var comma = /,/g;
+        nStr = nStr.replace(comma, '');
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+    $(document).ready(function () {
+        $('#btn-order').click(function () {
+            cart.orderProduct(i);
+        })
+         $('.sizeinput').on("keypress", function () {
+             return event.charCode >= 48 && event.charCode <= 57
+         })
+        var totalMoney = 0;
+        $(".total_price_money").each(function() {
+            let money = $(this).val().replace(',','');
+            totalMoney  += parseInt(money);
+        });
+        let numCommas = addCommas(totalMoney);
+        $('#totalMoney').text(numCommas);
+    })
+  
+    function saveOrder() {
+        if (/Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            lstCart.forEach(function (item) {
+                item.Quantity = $('#quantityMobile_' + item.Product.ID).val();
+            })
+        } else {
+            lstCart.forEach(function (item) {
+                item.Quantity = $('#quantity_' + item.Product.ID).val();
+            })
+        }
+        let newCart = JSON.stringify(lstCart);
+        localStorage.setItem('CartSession', newCart);
+        alert("Lưu thành công")
+    }
+</script>

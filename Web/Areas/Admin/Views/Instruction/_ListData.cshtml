@@ -1,0 +1,50 @@
+﻿ @model IEnumerable<Web.Model.Instruction>
+ @using Web.Core
+    @{
+        int page = (int)TempData["Page"];
+        int tt = 0;
+        if (page == 1)
+        {
+            tt = 0;
+        }
+        else
+        {
+            tt = (page -1) * 10;
+        }
+    }
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th style="text-align:center;">TT</th>
+            <th style="text-align:center;">Tiêu đề</th>
+            <th style="text-align:center;">Mô tả</th>
+            <th style="text-align:center;">Nội dung</th>
+            <th style="text-align:center;">Ngày tạo</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            tt++;
+            <tr>
+                <td style="text-align:center;">@tt</td>
+                <td>@item.Title</td>
+                <td>@item.Description</td>
+                <td>@HelperString.TruncateByWord(HelperString.StripHTML(HttpUtility.HtmlDecode(item.Contents)), 100)</td>
+                <td>@string.Format("{0:dd/MM/yyyy HH:mm}", item.CreatedDate)</td>
+                <td  style="width:120px">
+                    <div class="btn-list pull-right mr5">
+                            <a href="/admin/instruction/edit/@item.ID" class="btn btn-primary btn-bordered">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-bordered" onclick="instruction.ondelete(@item.ID)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

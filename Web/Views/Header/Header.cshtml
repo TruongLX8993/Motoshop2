@@ -1,0 +1,20 @@
+﻿@model Web.Model.Header
+<div class="text_center_header">
+    <div class="social" id="Social">
+
+    </div>
+    <div class="hotline_number" id="HotLine">
+
+    </div>
+</div>
+@if (Model != null)
+{
+    <input type="hidden" id="headerContent" value="@Model.Contents" />
+}
+<script>
+    let headerContent = $('#headerContent').val();
+    var lstdata = JSON.parse(headerContent);
+    for (var i = 0; i < lstdata.length; i++) {
+        $("#" + lstdata[i].Key).html(lstdata[i].Value);
+    }
+</script>

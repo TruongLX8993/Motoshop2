@@ -1,0 +1,26 @@
+﻿@model List<Web.Model.Slide>
+<div class="container">
+    <ul id="supersized"></ul>
+    <div id="progress-back" class="load-item">
+        <div id="progress-bar hidden"></div>
+    </div>
+    <div class="controls-bar">
+        <a id="prevslide" class="nav-slide load-item nav-slide-prev"> <span class="fa fa-chevron-left fa-2x"></span></a>
+        <a id="nextslide" class="nav-slide load-item nav-slide-next"><span class="fa fa-chevron-right fa-2x"></span></a>
+    </div>
+    <div class="slide-container">
+        <div class="hidden-xss" id="slidecaption"></div>
+    </div>
+</div>
+<div class="supersized-setup">
+    @foreach (var item in Model)
+    {
+        <div class="init-none banner-info" data-image="@item.Image" data-url="@item.Link">
+            <div class="slide-content text-center">
+                <h3 class="b-title">@item.Title</h3>
+                <p></p>
+                <a class="btn btn-primary text-uppercase" href="@item.Link"><span class="iconm-point-right"></span>Xem chi tiết</a>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Quản lý menu trang chủ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var lstAction = (List<int>)HttpContext.Current.Session["Action"];
+}
+
+@using Web.Model.CustomModel
+@model List<Web.Model.HomeMenu>
+@*<script src="~/AppJs/homemenu.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Quản lý Menu trang chủ</h3>
+                <div style="top: 8px;position: absolute; right: 40px;" class="pull-right">
+                    @if (lstAction != null && lstAction.Contains((int)EnumHelper.Action.Add))
+                    {
+                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="homemenu.loadfrmAdd() "><i class="fa fa-plus"></i> Thêm mới</button>
+                    }
+                    @if (lstAction != null && lstAction.Contains((int)EnumHelper.Action.Edit))
+                    {
+                        <button type="button" class="btn btn-success waves-effect waves-light" onclick="homemenu.onupdateposittion() "><i class="fa fa-refresh"></i> Cập nhật vị trí</button>
+                    }
+                    @if (lstAction != null && lstAction.Contains((int)EnumHelper.Action.Delete))
+                    {
+                        <button type="button" class="btn btn-danger waves-effect waves-light" onclick="homemenu.onmultidelete() "><i class="fa fa-trash-o"></i> Xóa nhiều</button>
+                    }
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive" id="gridData">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        homemenu.loadData(1);
+    });
+</script>*@
+
+
+
+@{
+    ViewBag.Title = "Danh sách menu";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/AppJs/homemenu.js"></script>
+<div class="page-content-wrapper ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <h4 class="m-b-30 m-t-0">Danh sách menu</h4>
+                        <div class="row" style="margin-bottom:10px">
+                            <div class="col-md-4">
+                                <input type="text" id="txtSearch" class="form-control" placeholder="Nhập tên menu" />
+                                <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <button id="btnSearch" onclick="homemenu.loadData()" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button style="float:right" type="button" class="btn btn-primary waves-effect waves-light" onclick="homemenu.loadfrmAdd() "><i class="fa fa-plus"></i> Thêm mới</button>
+                            </div>
+                        </div>
+                        <div id="gridData" class="row">
+
+                        </div>
+                        <div class="col-md-12">
+                            <div style="width: 50%;margin: 0 auto;" id="paginationholder">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('searchclear').onclick = function () {
+        document.getElementById('txtSearch').value = '';
+        homemenu.loadData(1);
+    }
+</script>
+
+

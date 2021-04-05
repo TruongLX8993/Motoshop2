@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var lstProduct = ViewBag.RelatedProduct;
+    string dothtml = ".html";
+    string path = TempData["MapPath"].ToString();
+    var arrPath = path.Split('/');
+}
+
+@model Web.Model.Product
+<div class="block-path-product in">
+    <ul class="path-url">
+        <li>
+            <a href="index.html">Trang chủ &nbsp; <i class="fa fa-angle-double-right"></i></a>
+        </li>
+        @for (int i = 0; i < arrPath.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(arrPath[i]))
+            {
+                <li>
+                    <a href="index.html">@arrPath[i] &nbsp; <i class="fa fa-angle-double-right"></i></a>
+                </li>
+            }
+        }
+        <li>
+            <strong class="text-color-2">@Model.Name</strong>
+        </li>
+    </ul>
+</div>
+<div class="description-info product-detail product-detail-layout">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-right">
+            <div class="img-info">
+                <img src="@Model.Images" alt="@Model.Name">
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="info">
+                <h1>@Model.Name</h1>
+                <div class="price-detail">
+                    @if ((Model.Price == null || Model.Price == 0) && (Model.Sale == null || Model.Sale == 0))
+                    {
+                        <span data-format-currency="" class="p-sale">Liên hệ</span>
+                    }
+                    @if (Model.Sale != null && Model.Sale != 0)
+                    {
+                        <span data-format-currency="" class="p-sale">@Model.Sale</span>
+                    }
+                    else
+                    {
+                          <span data-format-currency="" class="p-sale">@Model.Price</span>
+                    }
+
+                </div>
+                <div class="block-product-btn-buy in">
+                    <div class="row form-group btn-action">
+                        <a href="javascript:void(0)" onclick="addToCart(@Model.ID)" id="6197" title="Đặt hàng" class="button-red add-to-cart">Mua ngay</a>
+                    </div>
+                </div>
+                <div class="more-content">
+                    <ul>
+                        <li>Hàng chính hãng USA</li>
+                        <li>Dùng cho Yamaha R6/R1/FZ1/MT10</li>
+                        <li>Miễn phí công lắp đặt</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="description">
+    <div class="more-description">
+        <p>@Model.Description</p>
+    </div>
+    <div class="block-images-product-slide">
+        <div class="title">
+            <h2>Hình ảnh sản phẩm</h2>
+        </div>
+        <div class="item-view-slide-image item-view-slide-image-product">
+            <div data-content="">
+                <div class="img img-normal">
+                    <figure>
+                        <a href="#" data-lightbox="" title="@Model.Name" class="c-center lightbox-init">
+                            <img alt="@Model.Name" class="full-width image-load-finished" data-img="@Model.Images" src="@Model.Images" title="@Model.Name">
+                        </a>
+                    </figure>
+                    <div class="init-none btn-view-image">
+                        <a href="/storage/pagedata/100113/img/slide/product/2883/IMG_3546.jpg" class="btn btn-default"> Xem chi tiết </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<h3 class="box-title-1 title-down">Sản phẩm cùng danh mục</h3>
+<div class="product-more product-same-category block-product-same-category-normal">
+    <div class="item-view-products rectangle2">
+        <div data-content="" class="view-items view-items-mobile">
+            @foreach (var item in lstProduct)
+            {
+                <div class="item">
+                    <div class="item-info">
+                        <div class="img">
+                            <figure>
+                                <a href="/@item.LinkSeo@dothtml" class="i-center">
+                                    <img alt="@item.Name" data-img="@item.Images" src="@item.Images" class="image-load-finished full-width">
+                                </a>
+                            </figure>
+                            <div class="item-opacity">
+                                <div class="quick-view">
+                                    <a href="/@item.LinkSeo@dothtml" class="fa fa-arrows-alt fa-2x"> </a>
+                                    <span class="btn btn-popup-detail"></span>
+                                </div>
+                            </div>
+                            <div class="init-none title-bottom text-ellipsis">
+                                <a href="/@item.LinkSeo@dothtml">@item.Name</a>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="init-none rating-style rating-"> </div>
+                            <p class="p-name text-ellipsis">
+                                <a href="/@item.LinkSeo@dothtml" data-method="get">@item.Name</a>
+                            </p>
+                            <p class="init-none second-title"></p>
+                            <p class="c-title"></p>
+                            <div class="row-price-2">
+                                <a class="btn btn-default btn-sm text-ellipsis" href="/@item.LinkSeo@dothtml"><i class="fa fa-angle-double-right"></i> Xem chi tiết</a>
+                            </div>
+                            <div class="row row-price-1">
+                                <div class="col-xs-7">
+                                    <div class="price">
+                                        @{
+                                            if (item.Price == null && item.Sale == null)
+                                            {
+                                                <p>
+                                                    <span class="p-sale">Liên hệ</span>
+                                                </p>
+                                            }
+                                            else if (item.Sale != null && item.Price != null)
+                                            {
+                                                <p>
+                                                    <span class="p-sale">@String.Format("{0:0,0}", item.Sale) Đ</span>
+                                                </p>
+                                            }
+                                            else if (item.Price != null && item.Sale == null)
+                                            {
+                                                <p>
+                                                    <span class="p-sale">@String.Format("{0:0,0}", item.Price) Đ</span>
+                                                </p>
+                                            }
+                                            else if (item.Price == null && item.Sale != null)
+                                            {
+                                                <p>
+                                                    <span class="p-sale">@String.Format("{0:0,0}", item.Sale) Đ</span>
+                                                </p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-xs-5">
+                                    <div class="text-right btn-view-more">
+                                        <a class="btn btn-default btn-sm text-ellipsis btn-block" href="/vi/p/all-balls---chen-co-yamaha-r6-r1-fz1-mt10.2883">
+                                            <i class="fa fa-angle-double-right"></i> Chi tiết
+                                        </a>
+                                    </div>
+                                    <div class="text-right init-none">
+                                        <span class="init-none btn btn-buy btn-buy-one">
+                                            <i class="fa fa-cart"></i>
+                                        </span>
+                                        <span class="init-none btn btn-buy btn-buy-two">
+                                            <i class="fa fa-cart"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div data-footer=""></div>
+        <div class="block-css-inline" style="display:none;">
+            <style type="text/css">
+                .view-items-mobile {
+                    width: 812.984px;
+                }
+
+                    .view-items-mobile .item {
+                        width: 255.99466666666666px;
+                        margin-right: 15px;
+                        margin-bottom: 15px;
+                    }
+            </style>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="init-none has-slick-slide block-product-category-slide-show">
+    <div class="item-view-products rectangle2">
+        <div class="slide-more">
+            <div data-content="" class="view-items" data-arrows="true" data-slick-dot="true" data-slick-responsive="3" data-slick-infinite="false">
+                <div class="style-loadding"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    function changeQuantity(quantity) {
+        if (quantity < 0) {
+            alert("Số lượng phải lớn 0");
+            $('#quantity').val(1);
+        }
+    }
+</script>
+}

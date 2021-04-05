@@ -1,0 +1,55 @@
+﻿
+@using Web.Core
+@model Web.Model.News
+@{
+    ViewBag.Title = Model.MetaTitle;
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    var lstRight = ViewBag.RightRelated;
+    var lstLeft = ViewBag.LeftRelated;
+}
+<ul class="path-url">
+    <li><a href="index.html">Trang chủ&nbsp; <i class="fa fa-angle-double-right"></i></a></li>
+    <li><a href="phu-kien-dan-chan.html">Tin tức&nbsp; <i class="fa fa-angle-double-right"></i></a></li>
+    <li><strong class="text-color-2">@Model.MetaTitle</strong></li>
+</ul>
+<div class="description-info product-detail product-detail-layout">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-right">
+            <div class="img-info"><img src="@Model.Image"></div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <div class="info">
+                <h1>@Model.MetaTitle</h1>
+                <div class="block-product-btn-buy in">
+                    <div class="init-none block-form-add-product-to-card">
+                        <form class="form-add-product-to-card">
+                            <div class="col-number-option">
+                                <div class="show-option-quality-buy in" data-copy-template="" data-elm-data="{&quot;num&quot;:1}" data-view-template-local="true" data-view-template=".show-option-quality-buy" data-template-id="entryOptionNumberProductToCard">
+                                    <div class="row">
+                                        <div class="col-xs-4">  <span class="disabled btn-minus">-</span>  </div>
+                                        <div class="col-xs-4">
+                                            <div class="option-number"> <strong>1</strong> <input type="number" name="add" value="1" class="init-none input-sm form-control"> </div>
+                                            <div class="hidden"> <input type="hidden" name="pid" value="2883"> <input type="hidden" name="sid" value="1"> </div>
+                                        </div>
+                                        <div class="col-xs-4"> <span data-button-magic="" data-elm-data="{&quot;num&quot;:&quot;2&quot;}" class="btn-plus" data-view-template-local="true" data-view-template=".show-option-quality-buy" data-template-id="entryOptionNumberProductToCard">+</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-btn-action"> 
+                             <span class="btn-buy-detail" data-button-magic="" data-ajax-url="/api/post/addtocart" data-method="POST" data-format-json="true" data-params-form=".form-add-product-to-card" data-redirect="/orders">  <i class="btn-buy-detail-style"></i>Chọn mua </span>  </div>
+                        </form>
+                    </div>
+                    <div class="init-none share-product-to-socialnetwork"> <a class="btn fb" data-share-to="https://www.facebook.com/sharer/sharer.php?u=" data-share-link="https://tinomotor.vn/vi/p/all-balls---chen-co-yamaha-r6-r1-fz1-mt10.2883" data-center="true" href="#"><i class="fa fa-facebook-square"></i> Facebook <span class="clearfix"></span></a> <a class="btn li" data-share-to="https://www.linkedin.com/shareArticle?mini=true&amp;url=" data-share-link="https://tinomotor.vn/vi/p/all-balls---chen-co-yamaha-r6-r1-fz1-mt10.2883" data-center="true" href="#"><i class="fa fa-linkedin-square"></i> Linkedin <span class="clearfix"></span></a> <a class="btn go" data-share-to="https://plus.google.com/share?url=" data-share-link="https://tinomotor.vn/vi/p/all-balls---chen-co-yamaha-r6-r1-fz1-mt10.2883" data-center="true" href="#"><i class="fa fa-google-plus-square"></i> Google + <span class="clearfix"></span></a> <a class="btn tw" data-share-to="https://twitter.com/intent/tweet?source=" data-share-link="https://tinomotor.vn/vi/p/all-balls---chen-co-yamaha-r6-r1-fz1-mt10.2883" data-center="true" href="#"><i class="fa fa-twitter-square"></i> Twitter <span class="clearfix"></span></a> <a class="btn en" data-center="true" href="mailto:?subject=&amp;body=https://tinomotor.vn/vi/p/all-balls---chen-co-yamaha-r6-r1-fz1-mt10.2883"><i class="fa fa-envelope-square"></i> Email <span class="clearfix"></span></a> </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="description">
+    <div class="more-description">
+     @Html.Raw(Model.Contents)
+    </div>
+</div>
+<div class="clearfix"></div> 
+ 

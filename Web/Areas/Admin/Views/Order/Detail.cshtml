@@ -1,0 +1,47 @@
+﻿@using Web.Model.CustomModel
+@model List<OrderDetailModel>
+@{
+    ViewBag.Title = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Chi tiết đơn hàng</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped cabn_datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Ảnh</th>
+                                        <th>Giá bán</th>
+                                        <th>Gía khuyến mãi</th>
+                                        <th>Số lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td style="vertical-align: middle;">@item.Name</td>
+                                            <td><img style="width:70px" src="@item.Images" /></td>
+                                            <td>@String.Format("{0:0,0}", item.Price)</td>
+                                            <td>@String.Format("{0:0,0}", item.Sale)</td>
+                                            <td style="vertical-align: middle;">@item.Quantity</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

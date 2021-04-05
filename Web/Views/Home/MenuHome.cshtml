@@ -1,0 +1,125 @@
+﻿@{
+    Layout = null;
+    string dothtml = ".html";
+}
+@model List<Web.Model.HomeMenu>
+
+    @*<div class="container">
+        <div class="hidden-xs hidden-sm desktop-menu">
+              
+          </div>
+
+          </div>*@
+<div class="container">
+    <div class="hidden-md hidden-lg">
+        <div class="row">
+            <div class="col-xs-2">
+                <div>
+                    <span data-object="#main-menu"
+                          data-closet-toggle-class="mobile-active">
+                        <span class="fa fa-navicon fa-2x">&nbsp;</span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <div class="hotline text-right">
+                    <a class="fa fa-shopping-basket init-none" href="orders.html"></a> <i class="fa fa-phone"></i> <a href="tel:0979036030">0987118069</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden-xs hidden-sm desktop-menu">
+       @if (Model != null && Model.Count > 0)
+       {
+           var lstParent = Model.Where(g => g.ParentId == 0).OrderBy(g => g.Ordering).ToList();
+        <ul>
+            @foreach (var item1 in lstParent)
+                {
+                    bool flug = false;
+                    var level2 = Model.Where(g => g.ParentId == item1.ID).ToList();
+                    if (level2.Count > 0)
+                    {
+                    <li class="menu-item menu-item-25">
+                        @if (item1.LinkSeo.Contains("huong-dan"))
+                        {
+                            flug = true;
+                            <a style="pointer-events: none;" href="/@item1.LinkSeo@dothtml">@item1.Name <i class="fa fa-angle-down"></i></a>
+                        }
+                        else
+                        {
+                            <a href="/@item1.LinkSeo@dothtml">@item1.Name <i class="fa fa-angle-down"></i></a>
+                        }
+                        <ul class="sub-menu">
+                            @foreach (var item2 in level2)
+                            {
+                                string link = "";
+                                if (flug)
+                                {
+                                    link = "huong-dan/" + @item2.LinkSeo;
+                                }
+                                else
+                                {
+                                    link = item2.LinkSeo;
+                                }
+                                var level3 = Model.Where(g => g.ParentId == item2.ID).ToList();
+                                if (level3.Count > 0)
+                                {
+                                    <li>
+                                        <a href="/@link@dothtml">@item2.Name</a>
+                                        <ul class="sub-menu2" style="position: absolute;">
+                                            @foreach (var item3 in level3)
+                                            {
+                                                <li><a style="color: #FFFFFF;background-color: #0080ff;border-top: 0.5px solid #99c2ff;line-height: 40px;height: 40px;" href="/@item3.LinkSeo@dothtml"> @item3.Name</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li><a href="/@link@dothtml"> @item2.Name</a></li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="menu-item menu-item-1"><a href="/@item1.LinkSeo@dothtml">@item1.Name</a></li>
+                }
+            }
+        </ul>
+       }
+    </div>
+    <div class="mobile-menu hidden-md hidden-lg" data-copy-obj=".desktop-menu > ul"></div>
+    <div class="hidden hidden-sm hidden-md hidden-lg form-group" style="padding-bottom:10px;">
+@if (Model != null && Model.Count > 0)
+{
+    var lstParent = Model.Where(g => g.ParentId == 0).OrderBy(g => g.Ordering).ToList();
+    <select data-option-goto-link class="form-control">
+@foreach (var item1 in lstParent)
+{
+    bool flug = false;
+    var level2 = Model.Where(g => g.ParentId == item1.ID).ToList();
+    if (level2.Count > 0)
+    {
+        <optgroup label="Trang chủ">
+            <option value="/@item1.LinkSeo@dothtml">@item1.Name</option>
+                @foreach (var item2 in level2)
+                {
+                    var level3 = Model.Where(g => g.ParentId == item2.ID).ToList();
+                    <option value="/@item2.LinkSeo@dothtml">@item2.Name</option>
+                }
+        </optgroup>
+    }
+    else
+    {
+        <option value="/@item1.LinkSeo@dothtml">@item1.Name</option>
+    }
+}
+    </select>
+}
+       
+    </div>
+</div>
+

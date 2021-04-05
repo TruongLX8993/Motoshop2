@@ -1,0 +1,126 @@
+﻿<script src="~/Content/Admin/assets/ckfinder/ckfinder.js"></script>
+@using Web.Model
+@model Web.Model.tbl_Video
+@using (Ajax.BeginForm("Edit", "Video", null,
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "video.onEditSuccess"
+    },
+    new { @id = "basicForm", @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <label class="col-md-2 control-label">Tên video</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(g => g.Name, new { @class = "form-control", placeholder = "Tên video" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Thứ tự</label>
+        <div class="col-md-3">
+            @Html.TextBoxFor(g => g.Ordering, new { @class = "form-control", Value = Model.Ordering ?? 0 })
+        </div>
+               </div>
+    @Html.HiddenFor(g => g.ID)
+    @Html.HiddenFor(g => g.Type)
+    @Html.HiddenFor(g => g.PageElementId)
+    <div class="form-group indirect">
+        @if (Model.Type == 2)
+        {
+        <label class="col-md-2 control-label">Url</label>
+        <div class="col-md-10">
+            <input type="text" id="urlyoutube" name="Url" class="form-control" value="@Model.Url" placeholder="https://www.youtube.com/watch?v=id" />
+            <div class="wrap-thumb-video" id="iframeyoutube">
+                @Html.HiddenFor(g => g.Images)
+                <img id="imgyoutube" src="@(Model.Images ?? "Content/Site/images/noimage.png")" width="320" height="240" />
+            </div>
+        </div>
+        }
+        else
+        {
+        @Html.HiddenFor(g => g.Url)
+        }
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10 pull-right">
+            <div class="checkbox checkbox-primary">
+                <input id="IsHome" name="IsHome" type="checkbox" @(Model.IsHome != false ? "checked" : "") value="true">
+                <label for="IsHome">
+                    Hiển thị trang chủ
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-10 pull-right">
+            <div class="checkbox checkbox-primary">
+                <input id="Status" name="Status" type="checkbox" @(Model.Status ? "checked" : "") value="true">
+                <label for="Status">
+                    Kích hoạt
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 pull-right pl0">
+        <button type="submit" class="btn btn-primary waves-effect waves-light">Cập nhật</button>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $("#basicForm").validate({
+            rules:
+            {
+                Name:
+                {
+                    required: true
+                },
+                Url:
+                {
+                    required: true,
+                    url: true
+                },
+            },
+            messages:
+            {
+                Name:
+                {
+                    required: "Bạn chưa nhập tiêu đề"
+                },
+                Url: {
+                    required: "Bạn chưa nhập Url",
+                    url:"Bạn nhập sai định dạng"
+                },
+            }
+        });
+        $("#basicForm #urlyoutube").change(function () {
+            var img = video.jYoutube($(this).val(), 320);
+            $("#basicForm #imgyoutube").attr('src', img);
+            $("#basicForm #Images").val(img);
+        });
+        $("#basicForm #LangCode").change(function () {
+            $.get("/Admin/PageElement/GetAllByLangCode?LangCode=" + $(this).val(), function (res) {
+                var html = "";
+                for (var i = 0; i < res.length; i++) {
+                    html += '<option value="' + res[i].ID + '">' + res[i].Name + '</option>';
+                }
+                $("#PageElementId").html(html);
+            });
+        });
+    });
+</script>
+<style>
+    .wrap-thumb-video {
+        position: relative;
+    }
+
+    .thumb-video {
+        position: absolute;
+    }
+
+    .playvideo {
+        position: absolute;
+        width: 40px;
+        left: 38px;
+        top: 33px;
+    }
+</style>

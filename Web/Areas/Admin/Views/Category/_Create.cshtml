@@ -1,0 +1,102 @@
+﻿@model Web.Model.Category
+@{
+    var lstCate = (List<Web.Model.Category>)TempData["Category"];
+}
+@helper RenderMenu(Web.Model.Category parent, List<Web.Model.Category> listfull)
+{
+var lstChilds = listfull.Where(g => g.ParentId == parent.ID);
+    <option value="@parent.ID">@(new String('-', ((int)parent.Level - 1) * 2))@parent.Name</option>
+foreach (var child in lstChilds)
+{
+        @RenderMenu(child, listfull);
+    }
+}
+@using (Ajax.BeginForm("Add", "Category", null,
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                OnSuccess = "Category.onAddSuccess"
+                            },
+                            new { @id = "frmData", @class = "form-horizontal" }))
+{
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Tên danh mục <span class="asterisk">(*)</span></label>
+        <div class="col-md-9">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Icon</label>
+        <div class="col-md-9">
+            @Html.TextBoxFor(model => model.Icon, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Danh mục cha <span class="asterisk">(*)</span></label>
+        <div class="col-md-4">
+            <select id="ParentId" name="ParentId" class="form-control">
+                <option value="0">-- Chọn Menu cha --</option>
+               @foreach (var parent in lstCate.Where(g => g.ParentId == 0))
+                {
+                  @RenderMenu(parent, lstCate);
+                }
+            </select>
+        </div>
+    </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Thứ tự <span class="asterisk">(*)</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.OrderDisplay, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Thêm mới</button>
+            </div>
+        </div>
+        <input id="LinkSeo" type="hidden" name="LinkSeo" value="" />
+}
+
+<script>
+    $(document).ready(function () {
+        $('#Name').on('blur', function () {
+            let link = $('#Name').val();
+            let linkSeo = RemoveMarkStr(link);
+            $('#LinkSeo').val(linkSeo);
+        })
+
+        $("#frmData").validate({
+            rules:
+            {
+                Name:
+                {
+                    required: true,
+                    maxlength: 250
+                },
+                OrderDisplay:
+               {
+                   required: true
+               }
+            },
+            messages:
+            {
+                Name:
+                {
+                    required: "Vui lòng nhập tên danh mục"
+                },
+                OrderDisplay:
+                {
+                    required: "Vui lòng nhập thứ tự"
+                }
+            },
+            highlight: function (element) {
+                jQuery(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            success: function (element) {
+                jQuery(element).closest('.form-group').removeClass('has-error');
+            }
+        });
+    })
+
+</script>

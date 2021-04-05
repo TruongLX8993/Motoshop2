@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<Web.Model.News>
+@{
+    ViewBag.Title = "Tin tức";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+    string dothtml = ".html";
+}
+
+<div class="title">
+    <h2><span>Tin tức</span> </h2>
+</div>
+<div class="item-view-products square">
+    @foreach (var item in Model)
+    {
+        <div class="view-items view-items-mobile">
+            <div class="item">
+                <div class="item-info">
+                    <div class="img">
+                        <figure>
+                            <a href="/tin-tuc/@item.LinkSeo@dothtml" class="i-center">
+                                <img alt="@item.MetaTitle" src="@item.Image" class="image-load">
+                            </a>
+                        </figure>
+                        <div class="item-opacity">
+                            <div class="quick-view"> <a href="/tin-tuc/@item.LinkSeo@dothtml" class="fa fa-arrows-alt fa-2x" data-method="get"> </a>
+                             <span class="btn btn-popup-detail"></span> 
+                            </div>
+                        </div>
+                        <div class="init-none title-bottom text-ellipsis"><a href="/tin-tuc/@item.LinkSeo@dothtml">@item.MetaTitle</a></div>
+                    </div>
+                    <div class="info">
+                        <div class="init-none rating-style rating-">  </div>
+                        <p class="p-name text-ellipsis"> <a href="/tin-tuc/@item.LinkSeo@dothtml">@item.MetaTitle</a> </p>
+                        <p class="init-none second-title"></p>
+                        <p class="c-title"></p>
+                        <div class="row-price-2"> <a class="btn btn-default btn-sm text-ellipsis" href="/tin-tuc/@item.LinkSeo@dothtml"><i class="fa fa-angle-double-right"></i> Xem chi tiết</a> </div>
+                        <div class="row row-price-1">
+                            <div class="col-xs-7">
+                                <div class="price">
+                                     
+                                </div>
+                            </div>
+                            <div class="col-xs-5">
+                                <div class="text-right btn-view-more"> <a class="btn btn-default btn-sm text-ellipsis btn-block" href="/tin-tuc/@item.LinkSeo@dothtml"><i class="fa fa-angle-double-right"></i> Chi tiết</a> </div>
+                                <div class="text-right init-none"> 
+                                <span class="init-none btn btn-buy btn-buy-one" data-ajax-url="/api/post/addtocart" data-method="POST" data-format-json="true" data-params="{&quot;sid&quot;:&quot;1&quot;,&quot;pid&quot;:&quot;2762&quot;,&quot;add&quot;:&quot;1&quot;}" data-trigger-click=".modal.in .fa-times-circle" data-show-errors=".alert-footer.alert-error" data-show-success=".alert-footer.alert" data-elm-data="{&quot;showMoreInfo&quot;:&quot;1&quot;}" data-view-template=".online-ordering-list" data-template-id="entryCartInfo"><i class="fa fa-cart"></i></span> 
+                                <span class="init-none btn btn-buy btn-buy-two" data-ajax-url="/api/post/addtocart" data-method="POST" data-format-json="true" data-params="{&quot;sid&quot;:&quot;1&quot;,&quot;pid&quot;:&quot;2762&quot;,&quot;add&quot;:&quot;1&quot;}" data-trigger-click=".modal.in .fa-times-circle" data-show-errors=".alert-footer.alert-error" data-show-success=".alert-footer.alert" data-elm-data="{&quot;showMoreInfo&quot;:&quot;1&quot;}" data-redirect="/vi/orders"><i class="fa fa-cart"></i></span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+   
+    <div class="block-css-inline" style="display:none;">
+        <style type="text/css">
+            .view-items-mobile {
+                width: 915px;
+            }
+
+                .view-items-mobile .item {
+                    width: 208.75px;
+                    margin-right: 20px;
+                    margin-bottom: 20px;
+                }
+        </style>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+

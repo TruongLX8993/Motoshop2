@@ -1,0 +1,55 @@
+﻿@{
+    var lstAction = (List<int>)HttpContext.Current.Session["Action"];
+}
+ 
+@model List<Web.Model.tbl_Order>
+<table class="table table-striped cabn_datatable">
+    <thead>
+        <tr>
+            <th>Tên người mua</th>
+            <th>Địa chỉ</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Ngày đặt</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string status = string.Empty;
+            switch (item.Status)
+            {
+                case 1:
+                    status = "Chưa giao hàng";
+                    break;
+                case 2:
+                    status = "Đã giao hàng";
+                    break;
+                case 3:
+                    status = "Hủy giao hàng";
+                    break;
+                case 4:
+                    status = "Trả lại hàng";
+                    break;
+            }
+            <tr>
+                <td style="vertical-align: middle;">@item.CustomerName</td>
+                <td style="vertical-align: middle;">@item.CustomerAddress</td>
+                <td style="vertical-align: middle;">@item.CustomerPhone</td>
+                <td style="vertical-align: middle;">@item.CustomerEmail</td>
+                <td style="vertical-align: middle;">@string.Format("{0:dd/MM/yyyy HH:mm}", item.CreatedDate)</td>
+                <td style="vertical-align: middle;">@status</td>
+                <td style="vertical-align: middle;">
+                    <div class="btn-list pull-right mr5">
+                        <a href="/Admin/Order/Detail/@item.ID" title="Xem chi tiết" class="btn btn-primary btn-bordered"><i class="glyphicon glyphicon-eye-open"></i></a>
+                        <a href="#" class="btn btn-danger btn-bordered" onclick="Order.ondelete(@item.ID) ">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
